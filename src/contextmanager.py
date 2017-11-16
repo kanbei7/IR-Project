@@ -1,6 +1,5 @@
 from typing import List, Tuple
 from nltk import word_tokenize, pos_tag
-
 from src.utility import isPOSNoun, isPOSAdjective
 
 
