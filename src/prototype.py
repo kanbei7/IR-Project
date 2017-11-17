@@ -30,6 +30,7 @@ CONVERSATION_SAMPLE = [
 "Now what do you think about France and its problems with Spain"
 ]
 
+#context switch
 #wiki only for the moment
 
 def test():

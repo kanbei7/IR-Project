@@ -8,19 +8,21 @@ q = 'spain'
 
 #takes in a rest api and return  a list of results
 def google(query, url_base = URL_BASE):
-	r = requests.get(url_base + query)
-	if r.status_code != 200:
-		return 'Search Failed!'
-	else:
-		d = json.loads(r.content)
-		return [[x['title'],x['link']] for x in d['items']]
+    r = requests.get(url_base + query)
+    if r.status_code != 200:
+        return 'Search Failed!'
+    else:
+        d = json.loads(r.content)
+        return [[x['title'],x['link']] for x in d['items']]
 
 def queryGenerator(lst):
-	return '+'.join(lst)
+    return '+'.join(lst)
 
 def displayResults(lst,show_topk):
-	for t in lst[:min(show_topk,len(lst))]:
-		print(t[0])
+
+    for t in lst[:min(show_topk,len(lst))]:
+        print(t[0])
+        print(t[1])
 
 CONVERSATION_SAMPLE = [
 "Do you know about Spain?",\
@@ -30,16 +32,32 @@ CONVERSATION_SAMPLE = [
 "Now what do you think about France and its problems with Spain"
 ]
 
+#more weight to new words
 #wiki only for the moment
 
-def test():
-    contextManager = ContextManager(5)
-    for sentence in CONVERSATION_SAMPLE:
-    	contextManager.addToContext(sentence)
-    	print ('Context:')
-    	print (contextManager.getContext())
-    	print ('Search Results:')
-    	displayResults(google(queryGenerator(contextManager.contextWords)), 3)
-    	print('='*20+'\n')
+def display(s,c):
+    c.addToContext(s)
+    print ('-'*10)
+    print ('Context:')
+    print (c.getContext())
+    print ('+'*10)
+    print ('Search Results:')
+    displayResults(google(queryGenerator(c.contextWords)), 3)
+    print('='*20+'\n')
 
-test()
+def test():
+    c = ContextManager(5)
+    for sentence in CONVERSATION_SAMPLE:
+        display(sentence,c)
+
+def interactive_test():
+    c = ContextManager(5)
+    while True:
+        print ('chatbot: Blablabla')
+        x = raw_input("You: \n")
+        display(x.strip(),c)
+
+#test()
+
+#interactive test
+interactive_test()
