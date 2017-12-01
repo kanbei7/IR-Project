@@ -72,9 +72,10 @@ def buildtable(datalist):
     termdata.fillna(0,inplace=True)
     return termdata
 
-def buildquerycolumn(datatable,query):
+def buildquerycolumn(datatable,query,w = 0):
     
-    w = 1/len(query)
+    if w == 0:
+        w = 1/len(query)
     
     datatable["keywordsdata"] = 0
     for key in query:
